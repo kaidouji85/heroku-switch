@@ -3,9 +3,10 @@
  *
  * @param {String} apiKey APIキー
  * @param {String} appName heorkuアプリ名
+ * @return {Promise}
  */
 function restartHeroku(apiKey, appName) {
-    $.ajax('https://api.heroku.com/apps/'+appName+'/dynos',{
+    return $.ajax('https://api.heroku.com/apps/'+appName+'/dynos',{
         headers:{
             Accept: 'application/vnd.heroku+json; version=3',
             Authorization: 'Bearer '+apiKey
@@ -40,7 +41,12 @@ function bindLocalStrage(selector, propName) {
 function handleButtonClick() {
     var apiKey = $('.api-key').val();
     var appName = $('.app-name').val();
-    restartHeroku(apiKey, appName);
+
+    $.blockUI();
+    restartHeroku(apiKey, appName)
+        .always(function() {
+            $.unblockUI();
+        });
 }
 
 var app = {
