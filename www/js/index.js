@@ -1,8 +1,8 @@
 /**
  * herokuアプリを再起動する
  *
- * @param{String} apiKey APIキー
- * @param{String} appName heorkuアプリ名
+ * @param {String} apiKey APIキー
+ * @param {String} appName heorkuアプリ名
  */
 function restartHeroku(apiKey, appName) {
     $.ajax('https://api.heroku.com/apps/'+appName+'/dynos',{
@@ -16,6 +16,20 @@ function restartHeroku(apiKey, appName) {
         console.log('success');
     }).fail(function(){
         console.log('error');
+    });
+}
+
+/**
+ * 指定した入力項目に対して、画面を閉じても直前の値が入るようにする
+ *
+ * @param {String} selector 入力項目を特定するjQueryセレクタ
+ * @param {String} propName 入力値を保存するローカルストレージのキー
+ */
+function bindLocalStrage(selector, propName) {
+    var input = $(selector);
+    input.val(localStorage[propName]);
+    input.on('change', function(e){
+        localStorage[propName] = e.target.value;
     });
 }
 
@@ -43,6 +57,8 @@ var app = {
     },
 
     receivedEvent: function(id) {
+        bindLocalStrage('.api-key', 'apiKey');
+        bindLocalStrage('.app-name', 'apiName');
         $('.restart-button').on('click',handleButtonClick);
     }
 };

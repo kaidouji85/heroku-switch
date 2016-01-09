@@ -9,6 +9,11 @@ herokuって便利だけど、スマホだけだと簡単に再起動できな�
 * herokuアカウントを持っている
 * heorokuの管理画面からAPI KEYをメモしている
 
+## 必要なツールなど
+以下コマンドを実行してください
+    npm install -g cordova
+    cordova platform add browser
+
 ## ローカルでの起動方法
 ローカルで以下コマンドを実行する
     cordova run browser
